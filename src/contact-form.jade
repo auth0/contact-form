@@ -1,0 +1,40 @@
+.modal.fade.contact-form-modal#contact-form-modal(tabindex="-1", role="dialog", aria-labelledby="contact-form-title")
+  .modal-dialog
+    form.modal-content.contact-form-modal__form#contact-form-modal__form
+      .modal-header.has-border
+        button.close(class="close", data-dismiss="modal", aria-label="Close")
+          span(aria-hidden="true") &times;
+        h4.modal-title#contact-form-title= modalTitle
+      .modal-body
+        .form-group
+          label.sr-only(for="contact-form-modal__name") Name
+          input.form-control.contact-form-modal__name#contact-form-modal__name(type="text", placeholder="Name", autocomplete="section-contact name", name="name", required)
+          span.required *
+        .form-group
+          label.sr-only(for="contact-form-modal__email") Email address
+          input.form-control.contact-form-modal__email#contact-form-modal__email(type="email", placeholder="Email address", autocomplete="section-contact email", name="email", required)
+          span.required *
+        .form-group
+          label.sr-only(for="contact-form-modal__company") Company
+          input.form-control.contact-form-modal__company#contact-form-modal__company(type="text", placeholder="Company", autocomplete="section-contact organization", name="company", required)
+          span.required *
+        .form-group
+          label.sr-only(for="contact-form-modal__message") Role
+          .custom-select
+            select.form-control.contact-form-modal__role#contact-form-modal__role(name="role", required)
+              option Software Developer
+              option Engineering Exec / Management
+              option C-Level
+              option IT operations
+              option Product Management
+              option Sales
+              option Marketing
+              option Security & Compliance
+              option Other
+          span.required *
+        .form-group
+          label.sr-only(for="contact-form-modal__message") Message
+          textarea.form-control.contact-form-modal__message#contact-form-modal__message(rows="4", placeholder="Message", name="message", required)
+          span.required *
+      .modal-footer
+        button.btn.btn-success.btn-lg.animated.contact-form-modal__submit#contact-form-modal__submit(type="submit") Send
