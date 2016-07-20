@@ -35,7 +35,7 @@
     "lodash": "^4.13.1"
   },
   "peerDependencies": {
-    "jquery": "^2.2.4"
+    "jquery": "^2.2.4 || ^3.0.0"
   },
   "devDependencies": {
     "auth0-styleguide": "auth0/styleguide",
