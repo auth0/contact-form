@@ -1,10 +1,10 @@
 import jQuery from 'jquery';
-import ContactForm from '../src/contact-form';
+import contactForm from '../src/contact-form';
 
 const $ = jQuery;
 
-const contactForm = new ContactForm;
+const contactFormInstance = new contactForm.ContactForm;
 
-contactForm.show();
+contactFormInstance.show();
 
-$('#show-modal').click(contactForm.show);
+$('#show-modal').click(contactFormInstance.show);
