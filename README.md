@@ -4,7 +4,7 @@
 
 ## Install
 ```javascript
-npm i --save auth0-contact-form
+npm i --save auth0-contact-form jquery@2
 ```
 
 ## Usage
