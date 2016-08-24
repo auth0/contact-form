@@ -1,4 +1,11 @@
 
+1.0.3 / 2016-08-24
+==================
+
+  * Merge pull request #3 from auth0/move-custom-select-css
+  * Change css class to avoid collisions
+  * Fix wrong version of peerdeps and update install script in docs
+
 1.0.2 / 2016-08-03
 ==================
 
