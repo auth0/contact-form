@@ -1,11 +1,12 @@
+/* eslint-disable import/no-extraneous-dependencies */
 import gulp from 'gulp';
 import browserSync from 'browser-sync';
 import webpack from 'webpack';
 import WebpackDevServer from 'webpack-dev-server';
+import Promise from 'bluebird';
 import commonConfig from './tools/webpack.common.config';
 import moduleConfig from './tools/webpack.module.config';
 import playgroundConfig from './tools/webpack.playground.config';
-import Promise from 'bluebird';
 
 /**
  * Develop with BrowserSync and HR
@@ -48,7 +49,7 @@ gulp.task('build', () =>
   ])
     .then(stats => {
       stats.forEach(stat => {
-        console.log(stat.toString(commonConfig.stats));
+        console.log(stat.toString(commonConfig.stats)); // eslint-disable-line no-console
       });
     })
     .catch(err => {

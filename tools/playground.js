@@ -2,8 +2,9 @@ import jQuery from 'jquery';
 import contactForm from '../src/contact-form';
 
 const $ = jQuery;
+const ContactForm = contactForm.ContactForm;
 
-const contactFormInstance = new contactForm.ContactForm;
+const contactFormInstance = new ContactForm();
 
 contactFormInstance.show();
 

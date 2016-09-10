@@ -1,8 +1,9 @@
+/* eslint-disable import/no-extraneous-dependencies */
 import { merge } from 'lodash';
-import commonConfig from './webpack.common.config.js';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 import webpack from 'webpack';
 import { join } from 'path';
+import commonConfig from './webpack.common.config.js';
 
 const config = merge({}, commonConfig, {
   entry: [

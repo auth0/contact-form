@@ -1,3 +1,4 @@
+/* eslint-disable import/no-extraneous-dependencies */
 import { merge } from 'lodash';
 import commonConfig from './webpack.common.config.js';
 

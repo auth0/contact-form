@@ -1,8 +1,10 @@
+/* eslint-env browser */
+
+import jQuery from 'jquery';
+import { assign } from 'lodash';
+import 'bootstrap/js/modal';
 import template from './contact-form.jade';
 import './contact-form.styl';
-import jQuery from 'jquery';
-import 'bootstrap/js/modal';
-import { assign } from 'lodash';
 
 // Globals apis
 const history = window.history;
