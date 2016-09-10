@@ -1,4 +1,10 @@
 
+1.0.4 / 2016-09-09
+==================
+
+  * Update eslint and fix lint problems
+  * Add Error button animation on form submit with unfilled inputs
+
 1.0.3 / 2016-08-24
 ==================
 
