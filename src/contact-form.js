@@ -125,6 +125,7 @@ class ContactForm {
     };
 
     element.on('input', validateOnInput);
+    element.on('invalid', () => this.setSubmitButtonState('error'));
   }
 
   /*
