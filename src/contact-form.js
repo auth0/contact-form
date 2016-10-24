@@ -232,7 +232,7 @@ class ContactForm {
         submitButton
           .removeClass('btn-success success btn-loading tada')
           .addClass('btn-danger shake')
-          .html('<span aria-hidden="true" class="btn-icon icon-budicon-389"></span> Error');
+          .html('Error');
         setTimeout(() => this.setSubmitButtonState('initial'), 2000);
         break;
 
@@ -270,7 +270,7 @@ class ContactForm {
     const hasError = element.hasClass('has-error');
     const isRequired = !!element.attr('required');
     const hasValue = !!element.val().trim();
-    const isValid = !hasError && isRequired && hasValue;
+    const isValid = !hasError && (hasValue || !isRequired);
 
     return isValid;
   }
