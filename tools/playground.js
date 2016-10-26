@@ -4,7 +4,10 @@ import contactForm from '../src/contact-form';
 const $ = jQuery;
 const ContactForm = contactForm.ContactForm;
 
-const contactFormInstance = new ContactForm();
+const contactFormInstance = new ContactForm({
+  test: true,
+  source: 'oss'
+});
 
 contactFormInstance.show();
 

@@ -18,8 +18,9 @@ class ContactForm {
     onModalOpen: () => {},
     onFormSuccess: () => {},
     onFormFail: () => {},
-    postUrl: 'https://webtask.it.auth0.com/api/run/auth0-generic/contact-form-mandrill',
-    modalTitle: 'Contact Sales Team'
+    postUrl: 'https://auth0-marketing.run.webtask.io/contact-form',
+    modalTitle: 'Contact Sales Team',
+    source: 'pricing'
   }
 
   constructor(options) {
@@ -282,13 +283,12 @@ class ContactForm {
     const { elements } = this.getElements();
 
     const data = {};
+
     const metricsData = {
       path: pathname,
       url: location.toString(),
       title: document.title,
-      referrer: document.referrer,
-      formId: '1049',
-      lpId: '1135'
+      referrer: document.referrer
     };
 
     elements.forEach(element => {
@@ -297,6 +297,13 @@ class ContactForm {
     });
 
     data.subject = `New contact from: ${pathname}`;
+    data.source = this.options.source;
+    data.referrer = pathname;
+
+    if (this.options.test) {
+      data.test = true;
+    }
+
     metricsData.trackData = metricsData.email;
 
     return { data, metricsData };
