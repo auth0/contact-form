@@ -1,4 +1,10 @@
 
+1.0.6 / 2016-10-25
+==================
+
+  * Merge pull request #4 from auth0/change-form-handler
+  * Change form handler and add source and test options
+
 1.0.5 / 2016-10-19
 ==================
 
