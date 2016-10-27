@@ -11,4 +11,4 @@ const contactFormInstance = new ContactForm({
 
 contactFormInstance.show();
 
-$('#show-modal').click(contactFormInstance.show);
+$('#show-modal').click(() => contactFormInstance.show());
