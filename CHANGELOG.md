@@ -1,4 +1,10 @@
 
+1.1.1 / 2016-10-31
+==================
+
+  * Add focus on the first element on show
+  * Add type=button to close button to prevent default action
+
 1.1.0 / 2016-10-31
 ==================
 
