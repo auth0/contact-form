@@ -20,6 +20,14 @@ class ContactForm {
     onFormFail: () => {},
     postUrl: 'https://auth0-marketing.run.webtask.io/contact-form',
     modalTitle: 'Contact Sales Team',
+    name: '',
+    email: '',
+    company: '',
+    role: '',
+    message: '',
+    roles: ['Software Developer', 'Engineering Exec / Management',
+      'C-Level', 'IT operations', 'Product Management',
+      'Sales', 'Marketing', 'Security & Compliance', 'Other'],
     source: 'pricing'
   }
 
@@ -54,11 +62,11 @@ class ContactForm {
    * Reset: unmount and mount component
    */
   reset() {
-    const { modalTitle } = this.options;
+    const { modalTitle, name, email, company, role, roles, message } = this.options;
     const { modalRoot } = this.getElements();
 
     modalRoot.remove();
-    $('body').append(template({ modalTitle }));
+    $('body').append(template({ modalTitle, name, email, company, role, roles, message }));
   }
 
   /**
