@@ -40,10 +40,12 @@ class ContactForm {
    */
   show() {
     this.reset();
-    const { modalRoot } = this.getElements();
+    const { modalRoot, elements } = this.getElements();
     const { onModalOpen, onFormSuccess, onFormFail } = this.options;
 
+    modalRoot.on('shown.bs.modal', () => elements[0].focus());
     modalRoot.modal();
+
     onModalOpen();
 
     const success = metricsData => {
