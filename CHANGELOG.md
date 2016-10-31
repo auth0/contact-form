@@ -1,4 +1,10 @@
 
+1.1.0 / 2016-10-31
+==================
+
+  * Add support for pre-fill field values
+  * Fix open button playground
+
 1.0.6 / 2016-10-25
 ==================
 
