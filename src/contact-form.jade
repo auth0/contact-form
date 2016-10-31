@@ -8,33 +8,27 @@
       .modal-body
         .form-group
           label.sr-only(for="contact-form-modal__name") Name
-          input.form-control.contact-form-modal__name#contact-form-modal__name(type="text", placeholder="Name", autocomplete="section-contact name", name="name", required)
+          input.form-control.contact-form-modal__name#contact-form-modal__name(type="text", placeholder="Name", autocomplete="section-contact name", name="name", value="#{name}", required)
           span.required *
         .form-group
           label.sr-only(for="contact-form-modal__email") Email address
-          input.form-control.contact-form-modal__email#contact-form-modal__email(type="email", placeholder="Email address", autocomplete="section-contact email", name="email", required)
+          input.form-control.contact-form-modal__email#contact-form-modal__email(type="email", placeholder="Email address", autocomplete="section-contact email", name="email", value="#{email}", required)
           span.required *
         .form-group
           label.sr-only(for="contact-form-modal__company") Company
-          input.form-control.contact-form-modal__company#contact-form-modal__company(type="text", placeholder="Company", autocomplete="section-contact organization", name="company", required)
+          input.form-control.contact-form-modal__company#contact-form-modal__company(type="text", placeholder="Company", autocomplete="section-contact organization", name="company", value="#{company}", required)
           span.required *
         .form-group
           label.sr-only(for="contact-form-modal__message") Role
           .acf-custom-select
             select.form-control.contact-form-modal__role#contact-form-modal__role(name="role", required)
-              option Software Developer
-              option Engineering Exec / Management
-              option C-Level
-              option IT operations
-              option Product Management
-              option Sales
-              option Marketing
-              option Security & Compliance
-              option Other
+              each item in roles
+                option(selected=item == role) #{item}
+                
           span.required *
         .form-group
           label.sr-only(for="contact-form-modal__message") Message
-          textarea.form-control.contact-form-modal__message#contact-form-modal__message(rows="4", placeholder="Message", name="message", required)
+          textarea.form-control.contact-form-modal__message#contact-form-modal__message(rows="4", placeholder="Message", name="message", required)= message
           span.required *
       .modal-footer
         button.btn.btn-success.btn-lg.animated.contact-form-modal__submit#contact-form-modal__submit(type="submit") Send
