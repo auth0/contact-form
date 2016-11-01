@@ -2,9 +2,11 @@
 import { merge } from 'lodash';
 import commonConfig from './webpack.common.config.js';
 
+const REMOVE_MODAL = !!process.env.REMOVE_MODAL;
+
 const config = merge({}, commonConfig, {
   output: {
-    filename: 'contact-form.js',
+    filename: REMOVE_MODAL ? 'contact-form-without-modal.js' : 'contact-form.js',
     library: 'Auth0ContactForm',
     libraryTarget: 'umd'
   },

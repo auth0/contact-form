@@ -4,7 +4,7 @@
   "description": "Auth0 team contact form",
   "main": "dist/contact-form.js",
   "scripts": {
-    "build": "NODE_ENV=production gulp build",
+    "build": "NODE_ENV=production gulp build && NODE_ENV=production REMOVE_MODAL=true gulp build",
     "start": "gulp start:dev",
     "prepublish": "npm run build",
     "lint:js": "eslint .",
@@ -49,6 +49,7 @@
     "bluebird": "^3.4.1",
     "browser-sync": "^2.13.0",
     "css-loader": "^0.23.1",
+    "empty-module": "0.0.2",
     "eslint": "^3.5.0",
     "eslint-config-auth0": "^5.0.0",
     "eslint-plugin-import": "^1.14.0",
