@@ -1,4 +1,10 @@
 
+1.1.2 / 2016-11-01
+==================
+
+  * Merge pull request #7 from auth0/bundle
+  * Generate bundle without bootstrap/js/modal
+
 1.1.1 / 2016-10-31
 ==================
 
