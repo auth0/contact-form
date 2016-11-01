@@ -6,6 +6,8 @@ import ExtractTextPlugin from 'extract-text-webpack-plugin';
 
 const DEBUG = process.env.NODE_ENV !== 'production';
 
+const REMOVE_MODAL = !!process.env.REMOVE_MODAL;
+
 const config = {
   entry: [
     './src'
@@ -84,6 +86,9 @@ const config = {
   },
 
   resolve: {
+    alias: {
+      'bootstrap/js/modal': REMOVE_MODAL ? 'empty-module': 'bootstrap/js/modal'
+    },
     extensions: ['', '.webpack.js', '.web.js', '.js', '.jsx', '.json', '.jade']
   },
 
