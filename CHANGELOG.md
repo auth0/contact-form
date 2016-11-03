@@ -1,4 +1,9 @@
 
+1.1.3 / 2016-11-02
+==================
+
+  * Bump Styleguide and remove unnecessary stylus var
+
 1.1.2 / 2016-11-01
 ==================
 
