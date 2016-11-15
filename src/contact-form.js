@@ -73,7 +73,8 @@ class ContactForm {
         $('#contact-form-modal__email'),
         $('#contact-form-modal__company'),
         $('#contact-form-modal__role'),
-        $('#contact-form-modal__message')
+        $('#contact-form-modal__message'),
+        $('#contact-form-modal__subject')
       ],
       submitButton: $('#contact-form-modal__submit')
     };
@@ -296,7 +297,6 @@ class ContactForm {
       metricsData[key] = data[key] = element.val();
     });
 
-    data.subject = `New contact from: ${pathname}`;
     metricsData.trackData = metricsData.email;
 
     return { data, metricsData };
