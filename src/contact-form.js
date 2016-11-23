@@ -306,7 +306,7 @@ class ContactForm {
       metricsData[key] = data[key] = element.val();
     });
 
-    data.subject = `New contact from: ${pathname}`;
+    data.subject = this.options.source || `New contact from: ${pathname}`;
     data.source = this.options.source;
     data.referrer = pathname;
 
