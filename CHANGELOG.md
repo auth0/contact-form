@@ -1,4 +1,10 @@
 
+1.2.0 / 2016-11-24
+==================
+
+  * Merge pull request #9 from auth0/add-subject-support
+  * Add support for message subject as param
+
 1.1.3 / 2016-11-02
 ==================
 
