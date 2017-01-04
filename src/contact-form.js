@@ -28,11 +28,20 @@ class ContactForm {
     roles: ['Software Developer', 'Engineering Exec / Management',
       'C-Level', 'IT operations', 'Product Management',
       'Sales', 'Marketing', 'Security & Compliance', 'Other'],
-    source: 'pricing'
+    source: 'pricing',
+    dictionary: {
+      name: 'Name',
+      email: 'Email address',
+      company: 'Company',
+      role: 'Role',
+      message: 'Message',
+      send: 'Send'
+    }
   }
 
   constructor(options) {
-    this.options = assign({}, this.options, options);
+    const dictionary = assign({}, this.options.dictionary, options.dictionary);
+    this.options = assign({}, this.options, options, { dictionary });
   }
 
   /**
@@ -64,11 +73,11 @@ class ContactForm {
    * Reset: unmount and mount component
    */
   reset() {
-    const { modalTitle, name, email, company, role, roles, message } = this.options;
+    const { modalTitle, name, email, company, role, roles, message, dictionary } = this.options;
     const { modalRoot } = this.getElements();
 
     modalRoot.remove();
-    $('body').append(template({ modalTitle, name, email, company, role, roles, message }));
+    $('body').append(template({ modalTitle, name, email, company, role, roles, message, dictionary }));
   }
 
   /**

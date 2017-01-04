@@ -7,19 +7,19 @@
         h4.modal-title#contact-form-title= modalTitle
       .modal-body
         .form-group
-          label.sr-only(for="contact-form-modal__name") Name
-          input.form-control.contact-form-modal__name#contact-form-modal__name(type="text", placeholder="Name", autocomplete="section-contact name", name="name", value="#{name}", required)
+          label.sr-only(for="contact-form-modal__name")= dictionary.name
+          input.form-control.contact-form-modal__name#contact-form-modal__name(type="text", placeholder="#{dictionary.name}", autocomplete="section-contact name", name="name", value="#{name}", required)
           span.required *
         .form-group
-          label.sr-only(for="contact-form-modal__email") Email address
-          input.form-control.contact-form-modal__email#contact-form-modal__email(type="email", placeholder="Email address", autocomplete="section-contact email", name="email", value="#{email}", required)
+          label.sr-only(for="contact-form-modal__email")= dictionary.email
+          input.form-control.contact-form-modal__email#contact-form-modal__email(type="email", placeholder="#{dictionary.email}", autocomplete="section-contact email", name="email", value="#{email}", required)
           span.required *
         .form-group
-          label.sr-only(for="contact-form-modal__company") Company
-          input.form-control.contact-form-modal__company#contact-form-modal__company(type="text", placeholder="Company", autocomplete="section-contact organization", name="company", value="#{company}", required)
+          label.sr-only(for="contact-form-modal__company")= dictionary.company
+          input.form-control.contact-form-modal__company#contact-form-modal__company(type="text", placeholder="#{dictionary.company}", autocomplete="section-contact organization", name="company", value="#{company}", required)
           span.required *
         .form-group
-          label.sr-only(for="contact-form-modal__message") Role
+          label.sr-only(for="contact-form-modal__message")= dictionary.role
           .acf-custom-select
             select.form-control.contact-form-modal__role#contact-form-modal__role(name="role", required)
               each item in roles
@@ -27,8 +27,8 @@
                 
           span.required *
         .form-group
-          label.sr-only(for="contact-form-modal__message") Message
-          textarea.form-control.contact-form-modal__message#contact-form-modal__message(rows="4", placeholder="Message", name="message", required)= message
+          label.sr-only(for="contact-form-modal__message")= dictionary.message
+          textarea.form-control.contact-form-modal__message#contact-form-modal__message(rows="4", placeholder="#{dictionary.message}", name="message", required)= message
           span.required *
       .modal-footer
-        button.btn.btn-success.btn-lg.animated.contact-form-modal__submit#contact-form-modal__submit(type="submit") Send
+        button.btn.btn-success.btn-lg.animated.contact-form-modal__submit#contact-form-modal__submit(type="submit")= dictionary.send
