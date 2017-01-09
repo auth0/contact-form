@@ -9,6 +9,7 @@ import './contact-form.styl';
 // Globals apis
 const history = window.history;
 const location = window.location;
+const mouseflow = window.mouseflow || undefined;
 const { pathname, href, search } = location;
 const $ = jQuery;
 
@@ -213,9 +214,15 @@ class ContactForm {
         .done(() => {
           this.setSubmitButtonState('success');
           this.cleanElementsValue();
+          if(mouseflow){
+            mouseflow.formSubmitSuccess(formRoot);
+          };
           successCallback(metricsData);
         })
         .fail(() => {
+          if(mouseflow){
+            mouseflow.formSubmitFailure(formRoot);
+          };
           this.setSubmitButtonState('error');
           failCallback(metricsData);
         });
