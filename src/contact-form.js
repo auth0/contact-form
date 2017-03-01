@@ -9,7 +9,7 @@ import './contact-form.styl';
 // Globals apis
 const history = window.history;
 const location = window.location;
-const { pathname, href, search } = location;
+const { pathname } = location;
 const $ = jQuery;
 
 class ContactForm {
@@ -333,6 +333,8 @@ class ContactForm {
  * Handle query string to detect `?contact=true` and show contact form
  */
 function handleQueryString(options) {
+  const { href, search } = location;
+
   // Check if actual url has a query string
   const queryStringHas = query => search.indexOf(query) > -1;
 
