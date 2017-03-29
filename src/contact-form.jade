@@ -41,6 +41,10 @@
               option Other
           span.required *
         .form-group
+          label.sr-only(for="contact-form-modal__subject") Subject
+          input.form-control.contact-form-modal__subject#contact-form-modal__subject(type="text", placeholder="Subject", name="subject", required)
+          span.required *
+        .form-group        
           label.sr-only(for="contact-form-modal__message") Message
           textarea.form-control.contact-form-modal__message#contact-form-modal__message(rows="4", placeholder="Message", name="message", required)
           span.required *
