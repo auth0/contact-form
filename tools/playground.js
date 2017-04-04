@@ -8,6 +8,7 @@ const contactFormInstance = new ContactForm({
   email: 'alejo.fernandez@auth0.com',
   role: 'IT operations',
   message: 'Hello',
+  includePhoneField: true,
   test: true,
   source: 'oss',
   modalTitle: 'Contact Sales Team'
