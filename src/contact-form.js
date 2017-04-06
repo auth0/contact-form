@@ -120,52 +120,54 @@ class ContactForm {
    * Realtime form field validation, based on his HTML attrs. Also enables company autocomplete
    */
   onInput = element => {
-    const { companyElement } = this.getElements();
+    if (element) {
+      const { companyElement } = this.getElements();
 
-    const isRequired = !!element.attr('required');
-    const isEmail = element.attr('type') === 'email';
-    const isPhone = element.attr('name') === 'phone';
+      const isRequired = !!element.attr('required');
+      const isEmail = element.attr('type') === 'email';
+      const isPhone = element.attr('name') === 'phone';
 
-    const validateOnInput = () => {
-      const value = element.val().trim();
-      const hasValue = !!value;
-      const checkOther = isRequired ? hasValue : true;
-      const checkEmail = isRequired || hasValue ? this.isValidEmail(value) : true;
-      const checkPhone = isRequired || hasValue ? this.isValidPhone(value) : true;
+      const validateOnInput = () => {
+        const value = element.val().trim();
+        const hasValue = !!value;
+        const checkOther = isRequired ? hasValue : true;
+        const checkEmail = isRequired || hasValue ? this.isValidEmail(value) : true;
+        const checkPhone = isRequired || hasValue ? this.isValidPhone(value) : true;
 
-      const isValid = (() => {
-        if (isEmail) {
-          return checkEmail;
-        }
+        const isValid = (() => {
+          if (isEmail) {
+            return checkEmail;
+          }
 
-        if (isPhone) {
-          return checkPhone;
-        }
+          if (isPhone) {
+            return checkPhone;
+          }
 
-        return checkOther;
-      })();
+          return checkOther;
+        })();
 
-      if (isValid) {
-        element.removeClass('has-error');
-      } else {
-        element.addClass('has-error');
-      }
-
-      if (isEmail && isValid) {
-        const emailDomain = value.replace(/.*@/, '');
-
-        if (!this.isFreeEmail(emailDomain)) {
-          this.autocompleteCompanyElement(emailDomain);
+        if (isValid) {
+          element.removeClass('has-error');
         } else {
-          companyElement.val('');
+          element.addClass('has-error');
         }
-      }
 
-      return isValid;
-    };
+        if (isEmail && isValid) {
+          const emailDomain = value.replace(/.*@/, '');
 
-    element.on('input', validateOnInput);
-    element.on('invalid', () => this.setSubmitButtonState('error'));
+          if (!this.isFreeEmail(emailDomain)) {
+            this.autocompleteCompanyElement(emailDomain);
+          } else {
+            companyElement.val('');
+          }
+        }
+
+        return isValid;
+      };
+
+      element.on('input', validateOnInput);
+      element.on('invalid', () => this.setSubmitButtonState('error'));
+    }
   };
 
   /*
