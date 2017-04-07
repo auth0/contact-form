@@ -50,7 +50,8 @@ class ContactForm {
   /**
    * Show Contact Form
    */
-  show() {
+  show(extendedOptions) {
+    this.options = assign({}, this.options, extendedOptions);
     this.reset();
     const { modalRoot, elements } = this.getElements();
     const { onModalOpen, onFormSuccess, onFormFail } = this.options;
@@ -120,54 +121,54 @@ class ContactForm {
    * Realtime form field validation, based on his HTML attrs. Also enables company autocomplete
    */
   onInput = element => {
-    if (element) {
-      const { companyElement } = this.getElements();
+    if (!element) return;
 
-      const isRequired = !!element.attr('required');
-      const isEmail = element.attr('type') === 'email';
-      const isPhone = element.attr('name') === 'phone';
+    const { companyElement } = this.getElements();
 
-      const validateOnInput = () => {
-        const value = element.val().trim();
-        const hasValue = !!value;
-        const checkOther = isRequired ? hasValue : true;
-        const checkEmail = isRequired || hasValue ? this.isValidEmail(value) : true;
-        const checkPhone = isRequired || hasValue ? this.isValidPhone(value) : true;
+    const isRequired = !!element.attr('required');
+    const isEmail = element.attr('type') === 'email';
+    const isPhone = element.attr('name') === 'phone';
 
-        const isValid = (() => {
-          if (isEmail) {
-            return checkEmail;
-          }
+    const validateOnInput = () => {
+      const value = element.val().trim();
+      const hasValue = !!value;
+      const checkOther = isRequired ? hasValue : true;
+      const checkEmail = isRequired || hasValue ? this.isValidEmail(value) : true;
+      const checkPhone = isRequired || hasValue ? this.isValidPhone(value) : true;
 
-          if (isPhone) {
-            return checkPhone;
-          }
+      const isValid = (() => {
+        if (isEmail) {
+          return checkEmail;
+        }
 
-          return checkOther;
-        })();
+        if (isPhone) {
+          return checkPhone;
+        }
 
-        if (isValid) {
-          element.removeClass('has-error');
+        return checkOther;
+      })();
+
+      if (isValid) {
+        element.removeClass('has-error');
+      } else {
+        element.addClass('has-error');
+      }
+
+      if (isEmail && isValid) {
+        const emailDomain = value.replace(/.*@/, '');
+
+        if (!this.isFreeEmail(emailDomain)) {
+          this.autocompleteCompanyElement(emailDomain);
         } else {
-          element.addClass('has-error');
+          companyElement.val('');
         }
+      }
 
-        if (isEmail && isValid) {
-          const emailDomain = value.replace(/.*@/, '');
+      return isValid;
+    };
 
-          if (!this.isFreeEmail(emailDomain)) {
-            this.autocompleteCompanyElement(emailDomain);
-          } else {
-            companyElement.val('');
-          }
-        }
-
-        return isValid;
-      };
-
-      element.on('input', validateOnInput);
-      element.on('invalid', () => this.setSubmitButtonState('error'));
-    }
+    element.on('input', validateOnInput);
+    element.on('invalid', () => this.setSubmitButtonState('error'));
   };
 
   /*

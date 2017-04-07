@@ -8,7 +8,6 @@ const contactFormInstance = new ContactForm({
   email: 'alejo.fernandez@auth0.com',
   role: 'IT operations',
   message: 'Hello',
-  includePhoneField: true,
   test: true,
   source: 'oss',
   modalTitle: 'Contact Sales Team'
@@ -31,5 +30,5 @@ const jpContactFormInstance = new ContactForm({
   }
 });
 
-$('#show-modal').click(() => contactFormInstance.show());
+$('#show-modal').click(() => contactFormInstance.show({includePhoneField: true}));
 $('#jp-modal').click(() => jpContactFormInstance.show());
