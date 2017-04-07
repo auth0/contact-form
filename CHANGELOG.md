@@ -1,4 +1,12 @@
 
+1.3.3 / 2017-04-07
+==================
+
+  * Merge pull request #15 from mike-casas/newfield
+  * fix show method to get a object
+  * fix element validate
+  * add phone field
+
 1.3.2 / 2017-03-03
 ==================
 
