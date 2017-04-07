@@ -30,5 +30,5 @@ const jpContactFormInstance = new ContactForm({
   }
 });
 
-$('#show-modal').click(() => contactFormInstance.show());
+$('#show-modal').click(() => contactFormInstance.show({includePhoneField: true}));
 $('#jp-modal').click(() => jpContactFormInstance.show());

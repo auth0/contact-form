@@ -21,7 +21,9 @@ class ContactForm {
     postUrl: 'https://auth0-marketing.run.webtask.io/contact-form',
     modalTitle: 'Contact Sales Team',
     name: '',
+    includePhoneField: false,
     email: '',
+    phone: '',
     company: '',
     role: '',
     message: '',
@@ -32,6 +34,7 @@ class ContactForm {
     dictionary: {
       name: 'Name',
       email: 'Email address',
+      phone: 'Phone Number',
       company: 'Company',
       role: 'Role',
       message: 'Message',
@@ -47,7 +50,8 @@ class ContactForm {
   /**
    * Show Contact Form
    */
-  show() {
+  show(extendedOptions) {
+    this.options = assign({}, this.options, extendedOptions);
     this.reset();
     const { modalRoot, elements } = this.getElements();
     const { onModalOpen, onFormSuccess, onFormFail } = this.options;
@@ -73,17 +77,18 @@ class ContactForm {
    * Reset: unmount and mount component
    */
   reset() {
-    const { modalTitle, name, email, company, role, roles, message, dictionary } = this.options;
+    const { modalTitle, name, email, phone, company, role, roles, message, dictionary, includePhoneField } = this.options;
     const { modalRoot } = this.getElements();
 
     modalRoot.remove();
-    $('body').append(template({ modalTitle, name, email, company, role, roles, message, dictionary }));
+    $('body').append(template({ modalTitle, name, email, phone, company, role, roles, message, dictionary, includePhoneField }));
   }
 
   /**
    * Get DOM elements
    */
   getElements() {
+    const elementPhone = this.options.includePhoneField ? $('#contact-form-modal__phone') : null;
     const options = {
       modalRoot: $('#contact-form-modal'),
       formRoot: $('#contact-form-modal__form'),
@@ -91,6 +96,7 @@ class ContactForm {
       elements: [
         $('#contact-form-modal__name'),
         $('#contact-form-modal__email'),
+        elementPhone,
         $('#contact-form-modal__company'),
         $('#contact-form-modal__role'),
         $('#contact-form-modal__message')
@@ -115,17 +121,32 @@ class ContactForm {
    * Realtime form field validation, based on his HTML attrs. Also enables company autocomplete
    */
   onInput = element => {
+    if (!element) return;
+
     const { companyElement } = this.getElements();
 
     const isRequired = !!element.attr('required');
     const isEmail = element.attr('type') === 'email';
+    const isPhone = element.attr('name') === 'phone';
 
     const validateOnInput = () => {
       const value = element.val().trim();
       const hasValue = !!value;
       const checkOther = isRequired ? hasValue : true;
       const checkEmail = isRequired || hasValue ? this.isValidEmail(value) : true;
-      const isValid = isEmail ? checkEmail : checkOther;
+      const checkPhone = isRequired || hasValue ? this.isValidPhone(value) : true;
+
+      const isValid = (() => {
+        if (isEmail) {
+          return checkEmail;
+        }
+
+        if (isPhone) {
+          return checkPhone;
+        }
+
+        return checkOther;
+      })();
 
       if (isValid) {
         element.removeClass('has-error');
@@ -148,7 +169,7 @@ class ContactForm {
 
     element.on('input', validateOnInput);
     element.on('invalid', () => this.setSubmitButtonState('error'));
-  }
+  };
 
   /*
    * Check if is a valid email
@@ -193,6 +214,14 @@ class ContactForm {
     $.get(`https://autocomplete.clearbit.com/v1/companies/suggest?query=${companyDomain}`, callback);
   }
 
+  /*
+   * check if is a valid phone number
+   */
+  isValidPhone(phone) {
+    // eslint-disable-next-line max-len, no-useless-escape
+    const phoneRegex = new RegExp(/^((00|\+)([1-5]\d\d|[1-9]\d?)?[\-\ ]?)?((\(?\d{6,}\)?[\-\ ]?){0,})([\-\ ]?(ext|extension|x)[\-\ ]?(\d+))?$/i);
+    return phoneRegex.test(phone);
+  }
   /*
    * Handle form submit
    */

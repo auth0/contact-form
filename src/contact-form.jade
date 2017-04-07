@@ -14,6 +14,11 @@
           label.sr-only(for="contact-form-modal__email")= dictionary.email
           input.form-control.contact-form-modal__email#contact-form-modal__email(type="email", placeholder="#{dictionary.email}", autocomplete="section-contact email", name="email", value="#{email}", required)
           span.required *
+        if includePhoneField
+          .form-group
+            label.sr-only(for="contact-form-modal__phone")= dictionary.phone
+            input.form-control.contact-form-modal__phone#contact-form-modal__phone(type="text", placeholder="#{dictionary.phone}", autocomplete="section-contact phone", name="phone", value="#{phone}", required)
+            span.required *
         .form-group
           label.sr-only(for="contact-form-modal__company")= dictionary.company
           input.form-control.contact-form-modal__company#contact-form-modal__company(type="text", placeholder="#{dictionary.company}", autocomplete="section-contact organization", name="company", value="#{company}", required)
@@ -24,7 +29,7 @@
             select.form-control.contact-form-modal__role#contact-form-modal__role(name="role", required)
               each item in roles
                 option(selected=item == role) #{item}
-                
+
           span.required *
         .form-group
           label.sr-only(for="contact-form-modal__message")= dictionary.message
