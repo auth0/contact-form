@@ -127,22 +127,16 @@ class ContactForm {
 
     const isRequired = !!element.attr('required');
     const isEmail = element.attr('type') === 'email';
-    const isPhone = element.attr('name') === 'phone';
 
     const validateOnInput = () => {
       const value = element.val().trim();
       const hasValue = !!value;
       const checkOther = isRequired ? hasValue : true;
       const checkEmail = isRequired || hasValue ? this.isValidEmail(value) : true;
-      const checkPhone = isRequired || hasValue ? this.isValidPhone(value) : true;
 
       const isValid = (() => {
         if (isEmail) {
           return checkEmail;
-        }
-
-        if (isPhone) {
-          return checkPhone;
         }
 
         return checkOther;
@@ -214,14 +208,6 @@ class ContactForm {
     $.get(`https://autocomplete.clearbit.com/v1/companies/suggest?query=${companyDomain}`, callback);
   }
 
-  /*
-   * check if is a valid phone number
-   */
-  isValidPhone(phone) {
-    // eslint-disable-next-line max-len, no-useless-escape
-    const phoneRegex = new RegExp(/^((00|\+)([1-5]\d\d|[1-9]\d?)?[\-\ ]?)?((\(?\d{6,}\)?[\-\ ]?){0,})([\-\ ]?(ext|extension|x)[\-\ ]?(\d+))?$/i);
-    return phoneRegex.test(phone);
-  }
   /*
    * Handle form submit
    */
