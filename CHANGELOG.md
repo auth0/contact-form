@@ -10,10 +10,6 @@
   * Merge pull request #16 from auth0/remove-phone-validation
   * Remove phone validation
   * Release 1.3.3
-  * Merge pull request #15 from mike-casas/newfield
-  * fix show method to get a object
-  * fix element validate
-  * add phone field
 
 1.3.3 / 2017-04-07
 ==================
