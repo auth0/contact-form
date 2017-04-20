@@ -88,7 +88,6 @@ class ContactForm {
    * Get DOM elements
    */
   getElements() {
-    const elementPhone = this.options.includePhoneField ? $('#contact-form-modal__phone') : null;
     const options = {
       modalRoot: $('#contact-form-modal'),
       formRoot: $('#contact-form-modal__form'),
@@ -96,13 +95,16 @@ class ContactForm {
       elements: [
         $('#contact-form-modal__name'),
         $('#contact-form-modal__email'),
-        elementPhone,
         $('#contact-form-modal__company'),
         $('#contact-form-modal__role'),
         $('#contact-form-modal__message')
       ],
       submitButton: $('#contact-form-modal__submit')
     };
+
+    if (this.options.includePhoneField) {
+      options.elements.push($('#contact-form-modal__phone'));
+    }
 
     return options;
   }
