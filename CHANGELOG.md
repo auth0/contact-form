@@ -1,4 +1,9 @@
 
+1.3.5 / 2017-04-20
+==================
+
+  * Fix form submit when includePhoneField is false
+
 1.3.4 / 2017-04-10
 ==================
 
