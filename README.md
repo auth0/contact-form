@@ -4,7 +4,7 @@
 
 ## Install
 ```javascript
-npm i --save auth0-contact-form jquery@2
+npm i --save auth0-contact-form jquery@2 bootstrap@3
 ```
 
 ## Usage
