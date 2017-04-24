@@ -1,8 +1,7 @@
 import jQuery from 'jquery';
-import contactForm from '../src/contact-form';
+import ContactForm from '../src/contact-form';
 
 const $ = jQuery;
-const ContactForm = contactForm.ContactForm;
 
 const contactFormInstance = new ContactForm({
   email: 'alejo.fernandez@auth0.com',
@@ -30,5 +29,5 @@ const jpContactFormInstance = new ContactForm({
   }
 });
 
-$('#show-modal').click(() => contactFormInstance.show({includePhoneField: true}));
+$('#show-modal').click(() => contactFormInstance.show({ includePhoneField: true }));
 $('#jp-modal').click(() => jpContactFormInstance.show());

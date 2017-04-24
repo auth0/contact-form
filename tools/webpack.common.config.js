@@ -1,44 +1,48 @@
 /* eslint-disable import/no-extraneous-dependencies */
-import path from 'path';
-import webpack from 'webpack';
-import poststylus from 'poststylus';
-import ExtractTextPlugin from 'extract-text-webpack-plugin';
+const path = require('path');
+const webpack = require('webpack');
+const poststylus = require('poststylus');
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 const DEBUG = process.env.NODE_ENV !== 'production';
-
-const REMOVE_MODAL = !!process.env.REMOVE_MODAL;
+const CDN = !!process.env.CDN;
 
 const config = {
-  entry: [
-    './src'
-  ],
+  entry: ['./src'],
 
   output: {
-    path: path.join(__dirname, '../dist'),
+    path: CDN ? path.join(__dirname, '../cdn') : path.join(__dirname, '../build'),
     publicPath: ''
   },
 
   module: {
-    loaders: [{
-      test: /\.js$/,
-      loaders: ['babel'],
-      include: [path.join(__dirname, '../src')]
-    }, {
-      test: /\.json$/,
-      loader: 'json'
-    }, {
-      test: /\.styl$/,
-      loader: ExtractTextPlugin.extract('style-loader',
-        `css-loader?${JSON.stringify({
-          sourceMap: DEBUG,
-          minimize: !DEBUG,
-          modules: false,
-          localIdentName: DEBUG ? '[path][name]--[local]--[hash:base64:5]' : '[hash:base64:4]'
-        })}!stylus-loader`)
-    }, {
-      test: /\.jade$/,
-      loader: 'jade'
-    }]
+    loaders: [
+      {
+        test: /\.js$/,
+        loaders: ['babel'],
+        include: [path.join(__dirname, '../src')]
+      },
+      {
+        test: /\.json$/,
+        loader: 'json'
+      },
+      {
+        test: /\.styl$/,
+        loader: ExtractTextPlugin.extract(
+          'style-loader',
+          `css-loader?${JSON.stringify({
+            sourceMap: DEBUG,
+            minimize: !DEBUG,
+            modules: false,
+            localIdentName: DEBUG ? '[path][name]--[local]--[hash:base64:5]' : '[hash:base64:4]'
+          })}!stylus-loader`
+        )
+      },
+      {
+        test: /\.jade$/,
+        loader: 'jade'
+      }
+    ]
   },
 
   plugins: [
@@ -53,43 +57,27 @@ const config = {
     // https://webpack.github.io/docs/list-of-plugins.html#occurrenceorderplugin
     new webpack.optimize.OccurenceOrderPlugin(true),
 
-    ...DEBUG ? [] : [
-      // Search for equal or similar files and deduplicate them in the output
-      // https://webpack.github.io/docs/list-of-plugins.html#dedupeplugin
-      new webpack.optimize.DedupePlugin(),
+    ...(DEBUG
+      ? []
+      : [
+        // Search for equal or similar files and deduplicate them in the output
+        // https://webpack.github.io/docs/list-of-plugins.html#dedupeplugin
+        new webpack.optimize.DedupePlugin(),
 
-      // Minimize all JavaScript output of chunks
-      // https://github.com/mishoo/UglifyJS2#compressor-options
-      new webpack.optimize.UglifyJsPlugin({
-        compress: {
-          screw_ie8: true
-        }
-      }),
-
-      // A plugin for a more aggressive chunk merging strategy
-      // https://webpack.github.io/docs/list-of-plugins.html#aggressivemergingplugin
-      new webpack.optimize.AggressiveMergingPlugin()
-    ],
-    new webpack.NoErrorsPlugin(),
-
-    // Required to inject jQuery dep on bootstrap/js/modal
-    new webpack.ProvidePlugin({
-      $: 'jquery',
-      jQuery: 'jquery'
-    })
+        // Minimize all JavaScript output of chunks
+        // https://github.com/mishoo/UglifyJS2#compressor-options
+        new webpack.optimize.UglifyJsPlugin({
+          compress: {
+            screw_ie8: true
+          }
+        })
+      ]
+    ),
+    new webpack.NoErrorsPlugin()
   ],
 
   stylus: {
-    use: [
-      poststylus(['autoprefixer'])
-    ]
-  },
-
-  resolve: {
-    alias: {
-      'bootstrap/js/modal': REMOVE_MODAL ? 'empty-module': 'bootstrap/js/modal'
-    },
-    extensions: ['', '.webpack.js', '.web.js', '.js', '.jsx', '.json', '.jade']
+    use: [poststylus(['autoprefixer'])]
   },
 
   target: 'web',
@@ -101,7 +89,7 @@ const config = {
     colors: true
   },
 
-  devtool: DEBUG ? 'inline-source-map' : null
+  devtool: DEBUG ? 'cheap-module-source-map' : 'source-map'
 };
 
-export default config;
+module.exports = config;

@@ -1,5 +1,6 @@
-# dist directory
-dist
+# build directory
+build
+cdn
 
 # Logs
 logs

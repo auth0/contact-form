@@ -1,1 +1,3 @@
-export default from './contact-form'; // eslint-disable-line import/no-named-as-default
+import ContactForm, { handleQueryString } from './contact-form';
+
+export { ContactForm as default, handleQueryString };

@@ -1,9 +1,9 @@
 /* eslint-disable import/no-extraneous-dependencies */
-import { merge } from 'lodash';
-import HtmlWebpackPlugin from 'html-webpack-plugin';
-import webpack from 'webpack';
-import { join } from 'path';
-import commonConfig from './webpack.common.config.js';
+const { merge } = require('lodash');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const webpack = require('webpack');
+const { join } = require('path');
+const commonConfig = require('./webpack.common.config');
 
 const config = merge({}, commonConfig, {
   entry: [
@@ -12,9 +12,7 @@ const config = merge({}, commonConfig, {
     'webpack/hot/dev-server',
     // Playground code:
     './tools/playground'
-  ],
-
-  devtool: 'eval-source-map'
+  ]
 });
 
 // Add hot reloading React components
@@ -33,4 +31,4 @@ config.plugins.push(
   })
 );
 
-export default config;
+module.exports = config;
