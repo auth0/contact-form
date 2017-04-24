@@ -1,4 +1,13 @@
 
+2.0.0 / 2017-04-24
+==================
+
+  * Update README.md
+  * Fix playground
+  * dont throw on node, handleQueryString has showOpts, npm module has all deps as externals and exports changed
+  * Fix changelog
+  * Release 1.3.5
+
 1.3.5 / 2017-04-20
 ==================
 
