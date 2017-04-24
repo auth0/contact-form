@@ -31,4 +31,12 @@ config.plugins.push(
   })
 );
 
+// Required to inject jQuery dep on bootstrap/js/modal
+config.plugins.push(
+  new webpack.ProvidePlugin({
+    $: 'jquery',
+    jQuery: 'jquery'
+  })
+);
+
 module.exports = config;

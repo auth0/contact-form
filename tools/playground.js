@@ -1,4 +1,5 @@
 import jQuery from 'jquery';
+import 'bootstrap/js/modal';
 import ContactForm from '../src/contact-form';
 
 const $ = jQuery;
