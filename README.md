@@ -9,14 +9,15 @@ npm i --save auth0-contact-form jquery@2
 
 ## Usage
 
-Needs jQuery, because is a peer dependency.
+Needs jQuery and bootstrap.js, because they are peer dependencies.
 
 ### Example
 
 `index.js`
 ```javascript
-import jQuery from 'jquery';
-import { ContactForm } from 'auth0-contact-form';
+import 'jquery';
+import 'bootstrap';
+import ContactForm from 'auth0-contact-form';
 
 const metricsLib = window.metricsLib;
 const $ = jQuery;
@@ -33,7 +34,7 @@ $('.btn').click(contactForm.show);
 
 `index.styl`
 ```stylus
-@import '../node_modules/auth0-contact-form/dist/contact-form.css'
+@import '../node_modules/auth0-contact-form/build/contact-form.css'
 ```
 
 ### Options
@@ -58,7 +59,8 @@ Also this package exports a function `handleQueryString` that triggers the conta
 
 Example:
 ```javascript
-import jQuery from 'jquery';
+import 'jquery';
+import 'bootstrap';
 import { handleQueryString } from 'auth0-contact-form';
 
 const options = {

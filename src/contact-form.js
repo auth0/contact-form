@@ -2,17 +2,13 @@
 
 import jQuery from 'jquery';
 import { assign } from 'lodash';
-import 'bootstrap/js/modal';
 import template from './contact-form.jade';
 import './contact-form.styl';
 
 // Globals apis
-const history = window.history;
-const location = window.location;
-const { pathname } = location;
 const $ = jQuery;
 
-class ContactForm {
+export default class ContactForm {
   // Default options
   options = {
     onModalOpen: () => {},
@@ -321,8 +317,8 @@ class ContactForm {
     const data = {};
 
     const metricsData = {
-      path: pathname,
-      url: location.toString(),
+      path: window.location.pathname,
+      url: window.location.toString(),
       title: document.title,
       referrer: document.referrer
     };
@@ -332,9 +328,9 @@ class ContactForm {
       metricsData[key] = data[key] = element.val();
     });
 
-    data.subject = this.options.source || `New contact from: ${pathname}`;
+    data.subject = this.options.source || `New contact from: ${window.location.pathname}`;
     data.source = this.options.source;
-    data.referrer = pathname;
+    data.referrer = window.location.pathname;
 
     if (this.options.test) {
       data.test = true;
@@ -349,8 +345,8 @@ class ContactForm {
 /**
  * Handle query string to detect `?contact=true` and show contact form
  */
-function handleQueryString(options) {
-  const { href, search } = location;
+export function handleQueryString(options, showOpts) {
+  const { href, search } = window.location;
 
   // Check if actual url has a query string
   const queryStringHas = query => search.indexOf(query) > -1;
@@ -359,7 +355,7 @@ function handleQueryString(options) {
 
   // auto display modal if requested
   const form = new ContactForm(options);
-  form.show();
+  form.show(showOpts);
 
   const { modalRoot } = form.getElements();
 
@@ -369,8 +365,6 @@ function handleQueryString(options) {
     const newurl2 = href.replace('contact=true', '');
     const definitiveNewUrl = href !== newurl1 ? newurl1 : newurl2;
 
-    history.pushState({ path: definitiveNewUrl }, '', definitiveNewUrl);
+    window.history.pushState({ path: definitiveNewUrl }, '', definitiveNewUrl);
   });
 }
-
-export default { ContactForm, handleQueryString };

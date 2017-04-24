@@ -3,9 +3,7 @@ import gulp from 'gulp';
 import browserSync from 'browser-sync';
 import webpack from 'webpack';
 import WebpackDevServer from 'webpack-dev-server';
-import Promise from 'bluebird';
 import commonConfig from './tools/webpack.common.config';
-import moduleConfig from './tools/webpack.module.config';
 import playgroundConfig from './tools/webpack.playground.config';
 
 /**
@@ -39,32 +37,3 @@ gulp.task('start:browser-sync', () => {
 });
 
 gulp.task('start:dev', ['start:webpack-dev-server', 'start:browser-sync']);
-
-/**
- * Create bundles: universal bundle and browser-only bundle
- */
-gulp.task('build', () =>
-  Promise.all([
-    bundle(moduleConfig)
-  ])
-    .then(stats => {
-      stats.forEach(stat => {
-        console.log(stat.toString(commonConfig.stats)); // eslint-disable-line no-console
-      });
-    })
-    .catch(err => {
-      throw err;
-    })
-);
-
-function bundle(config) {
-  return new Promise((resolve, reject) => {
-    webpack(config).run((err, stats) => {
-      if (err) {
-        return reject(err);
-      }
-
-      return resolve(stats);
-    });
-  });
-}
