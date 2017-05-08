@@ -337,6 +337,11 @@ export default class ContactForm {
     }
 
     metricsData.trackData = metricsData.email;
+    metricsData.track_data2 = metricsData.message;
+    metricsData.track_data3 = metricsData.name;
+    metricsData.track_data4 = metricsData.company;
+    metricsData.track_data5 = metricsData.role;
+    metricsData.track_data6 = metricsData.phone;
 
     return { data, metricsData };
   }
