@@ -1,4 +1,9 @@
 
+2.0.2 / 2017-05-11
+==================
+
+  * Fix close button, remove unused devDep and bump styleguide css bundles
+
 2.0.1 / 2017-05-08
 ==================
 
