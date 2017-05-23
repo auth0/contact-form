@@ -1,4 +1,9 @@
 
+2.0.3 / 2017-05-23
+==================
+
+  * Make role field optional and disabled per default
+
 2.0.2 / 2017-05-11
 ==================
 
