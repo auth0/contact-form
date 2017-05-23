@@ -23,14 +23,15 @@
           label.sr-only(for="contact-form-modal__company")= dictionary.company
           input.form-control.contact-form-modal__company#contact-form-modal__company(type="text", placeholder="#{dictionary.company}", autocomplete="section-contact organization", name="company", value="#{company}", required)
           span.required *
-        .form-group
-          label.sr-only(for="contact-form-modal__message")= dictionary.role
-          .acf-custom-select
-            select.form-control.contact-form-modal__role#contact-form-modal__role(name="role", required)
-              each item in roles
-                option(selected=item == role) #{item}
+        if includeRoleField
+          .form-group
+            label.sr-only(for="contact-form-modal__role")= dictionary.role
+            .acf-custom-select
+              select.form-control.contact-form-modal__role#contact-form-modal__role(name="role", required)
+                each item in roles
+                  option(selected=item == role) #{item}
 
-          span.required *
+            span.required *
         .form-group
           label.sr-only(for="contact-form-modal__message")= dictionary.message
           textarea.form-control.contact-form-modal__message#contact-form-modal__message(rows="4", placeholder="#{dictionary.message}", name="message", required)= message

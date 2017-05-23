@@ -18,6 +18,7 @@ export default class ContactForm {
     modalTitle: 'Contact Sales Team',
     name: '',
     includePhoneField: false,
+    includeRoleField: false,
     email: '',
     phone: '',
     company: '',
@@ -73,11 +74,11 @@ export default class ContactForm {
    * Reset: unmount and mount component
    */
   reset() {
-    const { modalTitle, name, email, phone, company, role, roles, message, dictionary, includePhoneField } = this.options;
+    const { modalTitle, name, email, phone, company, role, roles, message, dictionary, includePhoneField, includeRoleField } = this.options;
     const { modalRoot } = this.getElements();
 
     modalRoot.remove();
-    $('body').append(template({ modalTitle, name, email, phone, company, role, roles, message, dictionary, includePhoneField }));
+    $('body').append(template({ modalTitle, name, email, phone, company, role, roles, message, dictionary, includePhoneField, includeRoleField }));
   }
 
   /**
@@ -92,7 +93,6 @@ export default class ContactForm {
         $('#contact-form-modal__name'),
         $('#contact-form-modal__email'),
         $('#contact-form-modal__company'),
-        $('#contact-form-modal__role'),
         $('#contact-form-modal__message')
       ],
       submitButton: $('#contact-form-modal__submit')
@@ -100,6 +100,10 @@ export default class ContactForm {
 
     if (this.options.includePhoneField) {
       options.elements.push($('#contact-form-modal__phone'));
+    }
+
+    if (this.options.includeRoleField) {
+      options.elements.push($('#contact-form-modal__role'));
     }
 
     return options;
