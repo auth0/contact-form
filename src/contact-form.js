@@ -335,6 +335,9 @@ export default class ContactForm {
     data.subject = this.options.source || `New contact from: ${window.location.pathname}`;
     data.source = this.options.source;
     data.referrer = window.location.pathname;
+    if (window.metricsLib && window.metricsLib.dwh) {
+      data.anonId = window.metricsLib.dwh.anonymousId();
+    }
 
     if (this.options.test) {
       data.test = true;
