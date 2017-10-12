@@ -22,7 +22,7 @@ gulp.task('start:webpack-dev-server', () => {
     // pretty colored output
     stats: commonConfig.stats
   });
-  server.listen(3000);
+  server.listen(process.env.PORT || 3000);
 });
 
 gulp.task('start:browser-sync', () => {

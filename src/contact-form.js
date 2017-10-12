@@ -216,6 +216,7 @@ export default class ContactForm {
   onSubmit(successCallback, failCallback) {
     const { postUrl } = this.options;
     const { elements, formRoot } = this.getElements();
+    const ChiliPiper = window.ChiliPiper;
 
     formRoot.submit(e => {
       e.preventDefault();
@@ -227,10 +228,19 @@ export default class ContactForm {
       const { data, metricsData } = this.getData(elements);
 
       return $.ajax({ type: 'POST', url: postUrl, data })
-        .done(() => {
+        .done((response) => {
           this.setSubmitButtonState('success');
           this.cleanElementsValue();
           successCallback(metricsData);
+          if (response.showAssistant && ChiliPiper) {
+            ChiliPiper.submit(
+              'auth0',
+              'dev-contact-form-router', {
+                title: 'Thanks! What time works best for a quick call?',
+                titleStyle: 'Roboto 22px #EA5938',
+                lead: response.fields
+              });
+          }
         })
         .fail(() => {
           this.setSubmitButtonState('error');
@@ -317,8 +327,9 @@ export default class ContactForm {
    */
   getData() {
     const { elements } = this.getElements();
+    const { scheduling } = this.options;
 
-    const data = {};
+    const data = { scheduling };
 
     const metricsData = {
       path: window.location.pathname,

@@ -7,7 +7,7 @@ const commonConfig = require('./webpack.common.config');
 
 const config = merge({}, commonConfig, {
   entry: [
-    'webpack-dev-server/client?http://localhost:3000/',
+    `webpack-dev-server/client?http://localhost:${process.env.PORT || '3000'}/`,
     // Activate Webpack Dev Server Inline mode with node.js API
     'webpack/hot/dev-server',
     // Playground code:

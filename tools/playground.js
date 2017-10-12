@@ -8,9 +8,11 @@ const contactFormInstance = new ContactForm({
   email: 'alejo.fernandez@auth0.com',
   role: 'IT operations',
   message: 'Hello',
-  test: true,
+  test: false,
   source: 'oss',
-  modalTitle: 'Contact Sales Team'
+  modalTitle: 'Contact Sales Team',
+  scheduling: true,
+  postUrl: 'https://auth0-marketing.run.webtask.io/contact-form-vnext'
 });
 
 const jpContactFormInstance = new ContactForm({

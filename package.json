@@ -8,6 +8,7 @@
     "build:normal": "NODE_ENV=production webpack --config tools/webpack.module.config.js",
     "build:cdn": "NODE_ENV=production CDN=true webpack --config tools/webpack.module.config.js",
     "start": "gulp start:dev",
+    "playground": "gulp start:webpack-dev-server",
     "prepublish": "npm run build",
     "lint:js": "eslint .",
     "lint": "npm run lint:js"
