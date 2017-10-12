@@ -14,7 +14,7 @@ export default class ContactForm {
     onModalOpen: () => {},
     onFormSuccess: () => {},
     onFormFail: () => {},
-    postUrl: 'https://auth0-marketing.run.webtask.io/contact-form',
+    postUrl: 'https://auth0-marketing.run.webtask.io/contact-form-vnext',
     modalTitle: 'Contact Sales Team',
     name: '',
     includePhoneField: false,
@@ -74,6 +74,7 @@ export default class ContactForm {
    * Reset: unmount and mount component
    */
   reset() {
+    /* eslint-disable-next-line */
     const { modalTitle, name, email, phone, company, role, roles, message, dictionary, includePhoneField, includeRoleField } = this.options;
     const { modalRoot } = this.getElements();
 
@@ -217,6 +218,8 @@ export default class ContactForm {
     const { postUrl } = this.options;
     const { elements, formRoot } = this.getElements();
 
+    loadScript({ src: 'https://js.chilipiper.com/marketing.js', globalName: 'ChiliPiper' });
+
     formRoot.submit(e => {
       e.preventDefault();
 
@@ -227,10 +230,19 @@ export default class ContactForm {
       const { data, metricsData } = this.getData(elements);
 
       return $.ajax({ type: 'POST', url: postUrl, data })
-        .done(() => {
+        .done((response) => {
           this.setSubmitButtonState('success');
           this.cleanElementsValue();
           successCallback(metricsData);
+          if (response.showAssistant && window.ChiliPiper) {
+            window.ChiliPiper.submit(
+              'auth0',
+              'dev-contact-form-router', {
+                title: 'Thanks! What time works best for a quick call?',
+                titleStyle: 'Roboto 22px #EA5938',
+                lead: response.fields
+              });
+          }
         })
         .fail(() => {
           this.setSubmitButtonState('error');
@@ -317,8 +329,9 @@ export default class ContactForm {
    */
   getData() {
     const { elements } = this.getElements();
+    const { scheduling } = this.options;
 
-    const data = {};
+    const data = { scheduling };
 
     const metricsData = {
       path: window.location.pathname,
@@ -379,4 +392,22 @@ export function handleQueryString(options, showOpts) {
 
     window.history.pushState({ path: definitiveNewUrl }, '', definitiveNewUrl);
   });
+}
+
+function loadScript({ src, globalName }, callback) {
+  if (globalName && window[globalName]) {
+    return callback && callback(null, window[globalName]);
+  }
+
+  const script = document.createElement('script');
+  const first = document.getElementsByTagName('script')[0];
+
+  script.async = true;
+  script.src = src;
+  script.type = 'text/javascript';
+
+  script.onerror = () => callback && callback(`Error loading ${src}`);
+  script.onload = () => callback && callback(null, window[globalName]);
+
+  first.parentNode.insertBefore(script, first);
 }

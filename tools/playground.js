@@ -7,16 +7,17 @@ const $ = jQuery;
 const contactFormInstance = new ContactForm({
   email: 'alejo.fernandez@auth0.com',
   role: 'IT operations',
-  message: 'Hello',
-  test: true,
+  message: 'This is a test, please disregard',
+  test: false,
   source: 'oss',
-  modalTitle: 'Contact Sales Team'
+  modalTitle: 'Contact Sales Team',
+  scheduling: true
 });
 
 const jpContactFormInstance = new ContactForm({
   email: 'alejo.fernandez@auth0.com',
   role: 'IT operations',
-  message: 'Hello',
+  message: 'This is a test, please disregard',
   test: true,
   source: 'oss',
   modalTitle: '弊社営業へのお問い合わせ',
