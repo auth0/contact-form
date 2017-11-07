@@ -35,7 +35,9 @@ export default class ContactForm {
       company: 'Company',
       role: 'Role',
       message: 'Message',
-      send: 'Send'
+      send: 'Send to Sales',
+      or: 'OR',
+      technicalInquiry: 'My inquiry is technical'
     }
   }
 
@@ -96,7 +98,9 @@ export default class ContactForm {
         $('#contact-form-modal__company'),
         $('#contact-form-modal__message')
       ],
-      submitButton: $('#contact-form-modal__submit')
+      isTechnical: $('#contact-form-modal__is-technical'),
+      submitButton: $('#contact-form-modal__submit'),
+      submitButtonTechnical: $('#contact-form-modal__technical')
     };
 
     if (this.options.includePhoneField) {
@@ -114,7 +118,12 @@ export default class ContactForm {
    * Set event handlers: form onSubmit and element onInput
    */
   setEventHandlers(onFormSuccess, onFormFail) {
-    const { elements } = this.getElements();
+    const { elements, formRoot, isTechnical, submitButtonTechnical } = this.getElements();
+
+    submitButtonTechnical.on('click', () => {
+      isTechnical.val('true');
+      formRoot.submit();
+    });
 
     elements.forEach(this.onInput);
     this.onSubmit(onFormSuccess, onFormFail);
@@ -238,8 +247,8 @@ export default class ContactForm {
             window.ChiliPiper.submit(
               'auth0',
               'dev-contact-form-router', {
-                title: 'Thanks! What time works best for a quick call?',
-                titleStyle: 'Roboto 22px #EA5938',
+                title: 'Your inquiry has been submitted!  Would you like to schedule time to talk about your inquiry as well?',
+                titleStyle: 'Roboto 20px #EA5938',
                 lead: response.fields
               });
           }
@@ -266,11 +275,17 @@ export default class ContactForm {
    * Change state of submit button
    */
   setSubmitButtonState(state) {
-    const { submitButton } = this.getElements();
+    const { submitButton, submitButtonTechnical, isTechnical } = this.getElements();
+    const { dictionary } = this.options;
+    const technical = (isTechnical.val() === 'true');
+    const button = technical ? submitButtonTechnical : submitButton;
+    const otherButton = technical ? submitButton : submitButtonTechnical;
+    const buttonText = technical ? dictionary.technicalInquiry : dictionary.send;
+    const buttonClass = technical ? 'btn-default' : 'btn-success';
 
     switch (state) {
       case 'success':
-        submitButton
+        button
           .removeClass('btn-danger shake btn-loading')
           .addClass('btn-success success tada')
           .html('<span aria-hidden="true" class="btn-icon icon-budicon-390"></span> Sent');
@@ -278,7 +293,8 @@ export default class ContactForm {
         break;
 
       case 'error':
-        submitButton
+        otherButton.attr('disabled', 'disabled');
+        button
           .removeClass('btn-success success btn-loading tada')
           .addClass('btn-danger shake')
           .html('<span aria-hidden="true" class="btn-icon icon-budicon-389"></span> Error');
@@ -286,17 +302,21 @@ export default class ContactForm {
         break;
 
       case 'process':
-        submitButton
+        otherButton.attr('disabled', 'disabled');
+        button
           .removeClass('success btn-danger')
           .addClass('btn-loading')
           .html('<span aria-hidden="true" class="icon-rotating icon-budicon-330"></span>');
         break;
 
       default:
-        submitButton
+        otherButton.attr('disabled', null);
+        isTechnical.val('false');
+        button
           .removeClass('success btn-danger btn-loading tada shake')
-          .addClass('btn-success')
-          .html('Send');
+          .attr('disabled', null)
+          .addClass(buttonClass)
+          .html(buttonText);
     }
   }
 
@@ -328,7 +348,7 @@ export default class ContactForm {
    * Get form and metrics data
    */
   getData() {
-    const { elements } = this.getElements();
+    const { elements, isTechnical } = this.getElements();
     const { scheduling } = this.options;
 
     const data = { scheduling };
@@ -345,6 +365,7 @@ export default class ContactForm {
       metricsData[key] = data[key] = element.val();
     });
 
+    data.technical = (isTechnical.val() === 'true');
     data.subject = this.options.source || `New contact from: ${window.location.pathname}`;
     data.source = this.options.source;
     data.referrer = window.location.pathname;
