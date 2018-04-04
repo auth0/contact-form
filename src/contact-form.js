@@ -239,19 +239,10 @@ export default class ContactForm {
       const { data, metricsData } = this.getData(elements);
 
       return $.ajax({ type: 'POST', url: postUrl, data })
-        .done((response) => {
+        .done(() => {
           this.setSubmitButtonState('success');
           this.cleanElementsValue();
           successCallback(metricsData);
-          if (response.showAssistant && window.ChiliPiper) {
-            window.ChiliPiper.submit(
-              'auth0',
-              'dev-contact-form-router', {
-                title: 'Your inquiry has been submitted!  Would you like to schedule time to talk about your inquiry as well?',
-                titleStyle: 'Roboto 20px #EA5938',
-                lead: response.fields
-              });
-          }
         })
         .fail(() => {
           this.setSubmitButtonState('error');
