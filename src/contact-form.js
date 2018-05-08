@@ -4,6 +4,7 @@ import jQuery from 'jquery';
 import { assign } from 'lodash';
 import template from './contact-form.jade';
 import './contact-form.styl';
+import { EventEmitter } from './utils';
 
 // Globals apis
 const $ = jQuery;
@@ -44,6 +45,50 @@ export default class ContactForm {
   constructor(options) {
     const dictionary = assign({}, this.options.dictionary, options.dictionary);
     this.options = assign({}, this.options, options, { dictionary });
+    this.xhrIsDone = false;
+    this.wasRendered = false;
+    this.modalIsOpen = false;
+    this.isGDPR = false;
+    this.consent = true;
+
+    this.eventEmitter = new EventEmitter();
+    this.eventEmitter.subscribe('readyToUpdate', this.updateUI);
+
+    $.get('https://gdpr-service.herokuapp.com/is-gdpr')
+      .done(this.setGDPR)
+      .fail(this.setGDPR);
+  }
+
+  updateUI = ({ detail: { isGDPR } }) => {
+    const {
+      elements,
+      submitButton,
+      submitButtonTechnical,
+      consentGdpr,
+      formRoot
+    } = this.getElements();
+
+    if (this.xhrIsDone && !this.wasRendered) {
+      elements.forEach(domElement => {
+        domElement.attr('disabled', false);
+      });
+      submitButton.attr('disabled', false);
+      submitButtonTechnical.attr('disabled', false);
+      if (isGDPR) {
+        consentGdpr.show();
+        const modalFooter = formRoot.find('.modal-footer');
+        modalFooter.addClass('padding-bottom-util');
+      }
+      this.wasRendered = true;
+    }
+  }
+
+  setGDPR = (result) => {
+    this.xhrIsDone = true;
+    this.isGDPR = (result && result.isGDPR) || false;
+    if (this.modalIsOpen) {
+      this.eventEmitter.dispatch('readyToUpdate', { isGDPR: this.isGDPR });
+    }
   }
 
   /**
@@ -55,7 +100,17 @@ export default class ContactForm {
     const { modalRoot, elements } = this.getElements();
     const { onModalOpen, onFormSuccess, onFormFail } = this.options;
 
-    modalRoot.on('shown.bs.modal', () => elements[0].focus());
+    modalRoot.on('shown.bs.modal', () => {
+      this.modalIsOpen = true;
+      elements[0].focus();
+      this.eventEmitter.dispatch('readyToUpdate', { isGDPR: this.isGDPR });
+    });
+
+    modalRoot.on('hidden.bs.modal', () => {
+      this.modalIsOpen = false;
+      this.wasRendered = false;
+    });
+
     modalRoot.modal();
 
     onModalOpen();
@@ -77,11 +132,37 @@ export default class ContactForm {
    */
   reset() {
     /* eslint-disable-next-line */
-    const { modalTitle, name, email, phone, company, role, roles, message, dictionary, includePhoneField, includeRoleField } = this.options;
+    const {
+      modalTitle,
+      name,
+      email,
+      phone,
+      company,
+      role,
+      roles,
+      message,
+      dictionary,
+      includePhoneField,
+      includeRoleField,
+      isDisabled
+    } = this.options;
     const { modalRoot } = this.getElements();
 
     modalRoot.remove();
-    $('body').append(template({ modalTitle, name, email, phone, company, role, roles, message, dictionary, includePhoneField, includeRoleField }));
+    $('body').append(template({
+      modalTitle,
+      name,
+      email,
+      phone,
+      company,
+      role,
+      roles,
+      message,
+      dictionary,
+      includePhoneField,
+      includeRoleField,
+      isDisabled
+    }));
   }
 
   /**
@@ -100,7 +181,10 @@ export default class ContactForm {
       ],
       isTechnical: $('#contact-form-modal__is-technical'),
       submitButton: $('#contact-form-modal__submit'),
-      submitButtonTechnical: $('#contact-form-modal__technical')
+      submitButtonTechnical: $('#contact-form-modal__technical'),
+      consentGdpr: $('#contact-form-modal__consent-gdpr'),
+      consentGdprAccepted: $('#contact-form-modal__consent-gdpr-yes'),
+      consentGdprRejected: $('#contact-form-modal__consent-gdpr-no')
     };
 
     if (this.options.includePhoneField) {
@@ -118,12 +202,23 @@ export default class ContactForm {
    * Set event handlers: form onSubmit and element onInput
    */
   setEventHandlers(onFormSuccess, onFormFail) {
-    const { elements, formRoot, isTechnical, submitButtonTechnical } = this.getElements();
+    const {
+      elements,
+      formRoot,
+      isTechnical,
+      submitButtonTechnical,
+      consentGdprAccepted,
+      consentGdprRejected
+    } = this.getElements();
 
     submitButtonTechnical.on('click', () => {
       isTechnical.val('true');
       formRoot.submit();
     });
+
+    consentGdprAccepted.click(() => { this.consent = true; });
+
+    consentGdprRejected.click(() => { this.consent = false; });
 
     elements.forEach(this.onInput);
     this.onSubmit(onFormSuccess, onFormFail);
@@ -375,7 +470,28 @@ export default class ContactForm {
     metricsData.track_data5 = metricsData.role;
     metricsData.track_data6 = metricsData.phone;
 
+    if (this.isGDPR) {
+      data.showConsent = true;
+      data.newConsent = getNewConsentValue(this.consent.toString());
+    } else {
+      data.showConsent = false;
+      data.newConsent = getNewConsentValue();
+    }
+
     return { data, metricsData };
+  }
+}
+
+const GDPR_STATE = ['Unknown', 'Yes', 'No'];
+
+function getNewConsentValue(value = '') {
+  switch (value) {
+    case 'true':
+      return GDPR_STATE[1];
+    case 'false':
+      return GDPR_STATE[2];
+    default:
+      return GDPR_STATE[0];
   }
 }
 

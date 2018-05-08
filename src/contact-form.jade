@@ -8,37 +8,49 @@
       .modal-body
         .form-group
           label.sr-only(for="contact-form-modal__name")= dictionary.name
-          input.form-control.contact-form-modal__name#contact-form-modal__name(type="text", placeholder="#{dictionary.name}", autocomplete="section-contact name", name="name", value="#{name}", required)
+          input.form-control.contact-form-modal__name#contact-form-modal__name(type="text", placeholder="#{dictionary.name}", autocomplete="section-contact name", name="name", value="#{name}", required, disabled)
           span.required *
         .form-group
           label.sr-only(for="contact-form-modal__email")= dictionary.email
-          input.form-control.contact-form-modal__email#contact-form-modal__email(type="email", placeholder="#{dictionary.email}", autocomplete="section-contact email", name="email", value="#{email}", required)
+          input.form-control.contact-form-modal__email#contact-form-modal__email(type="email", placeholder="#{dictionary.email}", autocomplete="section-contact email", name="email", value="#{email}", required, disabled)
           span.required *
         if includePhoneField
           .form-group
             label.sr-only(for="contact-form-modal__phone")= dictionary.phone
-            input.form-control.contact-form-modal__phone#contact-form-modal__phone(type="text", placeholder="#{dictionary.phone}", autocomplete="section-contact phone", name="phone", value="#{phone}", required)
+            input.form-control.contact-form-modal__phone#contact-form-modal__phone(type="text", placeholder="#{dictionary.phone}", autocomplete="section-contact phone", name="phone", value="#{phone}", required, disabled)
             span.required *
         .form-group
           label.sr-only(for="contact-form-modal__company")= dictionary.company
-          input.form-control.contact-form-modal__company#contact-form-modal__company(type="text", placeholder="#{dictionary.company}", autocomplete="section-contact organization", name="company", value="#{company}", required)
+          input.form-control.contact-form-modal__company#contact-form-modal__company(type="text", placeholder="#{dictionary.company}", autocomplete="section-contact organization", name="company", value="#{company}", required, disabled)
           span.required *
         if includeRoleField
           .form-group
             label.sr-only(for="contact-form-modal__role")= dictionary.role
             .acf-custom-select
-              select.form-control.contact-form-modal__role#contact-form-modal__role(name="role", required)
+              select.form-control.contact-form-modal__role#contact-form-modal__role(name="role", required, disabled)
                 each item in roles
                   option(selected=item == role) #{item}
-
             span.required *
         .form-group
           label.sr-only(for="contact-form-modal__message")= dictionary.message
-          textarea.form-control.contact-form-modal__message#contact-form-modal__message(rows="4", placeholder="#{dictionary.message}", name="message", required)= message
+          textarea.form-control.contact-form-modal__message#contact-form-modal__message(rows="4", placeholder="#{dictionary.message}", name="message", required, disabled)= message
           span.required *
       .modal-footer
+        .consent-gdpr#contact-form-modal__consent-gdpr
+          h4 Consent
+          p.description
+            | We'd also like to reach out when we have something worth sharing — check out some examples (linked). You can always change your mind and opt out at any time.
+          label.text-option
+            input.radio-option#contact-form-modal__consent-gdpr-yes(type="radio", name="consent", value="true", required, checked)
+            span Email me about product updates, learning resources, feedback surveys, special offers, and events.
+          label.text-option
+            input.radio-option#contact-form-modal__consent-gdpr-no(type="radio", name="consent", value="false", required)
+            span No, thank you. Please just answer my question.
+
+
+
         input#contact-form-modal__is-technical(type="hidden", name="isTechnical", value="false")
-        button.btn.btn-success.btn-lg.animated.contact-form-modal__submit#contact-form-modal__submit(type="submit")= dictionary.send
+        button.btn.btn-success.btn-lg.animated.contact-form-modal__submit#contact-form-modal__submit(type="submit", disabled)= dictionary.send
         if dictionary.technicalInquiry
           span.contact-form-modal__button-separator= dictionary.or
-          button.btn.btn-default.btn-lg.animated.contact-form-modal__submit#contact-form-modal__technical(type="button")= dictionary.technicalInquiry
+          button.btn.btn-default.btn-lg.animated.contact-form-modal__submit#contact-form-modal__technical(type="button", disabled)= dictionary.technicalInquiry
