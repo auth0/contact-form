@@ -1,4 +1,10 @@
 
+2.0.9 / 2018-05-10
+==================
+
+  * Merge pull request #22 from auth0/gdpr
+  * Added consent gdpr
+
 2.0.8 / 2018-04-05
 ==================
 
