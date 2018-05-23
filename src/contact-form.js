@@ -15,7 +15,7 @@ export default class ContactForm {
     onModalOpen: () => {},
     onFormSuccess: () => {},
     onFormFail: () => {},
-    postUrl: 'https://auth0-marketing.run.webtask.io/contact-form-vnext',
+    postUrl: 'https://wt-139739a316b9b05b2ef2d61c5ed80be7-0.sandbox.auth0-extend.com/contact-form-vnext',
     modalTitle: 'Contact Sales Team',
     name: '',
     includePhoneField: false,
