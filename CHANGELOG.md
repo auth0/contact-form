@@ -1,4 +1,10 @@
 
+2.0.14 / 2018-06-04
+===================
+
+  * Merge pull request #23 from auth0/disabled_required_checkbox
+  * Disable required chackbox if the country isn't gdpr
+
 2.0.13 / 2018-05-31
 ===================
 
