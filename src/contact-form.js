@@ -78,6 +78,9 @@ export default class ContactForm {
         consentGdpr.show();
         const modalFooter = formRoot.find('.modal-footer');
         modalFooter.addClass('padding-bottom-util');
+      } else {
+        $('#contact-form-modal__consent-gdpr-yes').removeAttr('required');
+        $('#contact-form-modal__consent-gdpr-no').removeAttr('required');
       }
       this.wasRendered = true;
     }
