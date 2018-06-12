@@ -1,6 +1,6 @@
 {
   "name": "auth0-contact-form",
-  "version": "1.0.5",
+  "version": "1.0.7",
   "description": "Auth0 team contact form",
   "main": "dist/contact-form.js",
   "scripts": {
