@@ -402,7 +402,7 @@ export default class ContactForm {
         otherButton.attr('disabled', null);
         isTechnical.val('false');
         button
-          .removeClass('success btn-danger btn-loading tada shake')
+          .removeClass('btn-success btn-danger btn-loading tada shake')
           .attr('disabled', null)
           .addClass(buttonClass)
           .html(buttonText);
