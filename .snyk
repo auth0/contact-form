@@ -1,0 +1,11 @@
+# Snyk (https://snyk.io) policy file, patches or ignores known vulnerabilities.
+version: v1.12.0
+# ignores vulnerabilities until expiry date; change duration by modifying expiry date
+ignore:
+  'npm:bootstrap:20160627':
+    - bootstrap:
+        reason: >-
+          We do not use `data-target` in the package, therefore not vulnerable
+          to the issue.
+        expires: '2019-03-13T22:00:40.949Z'
+patch: {}
