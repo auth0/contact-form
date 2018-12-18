@@ -1,4 +1,31 @@
 
+2.0.15 / 2018-12-18
+===================
+
+  * Merge pull request #31 from auth0/ME-336
+  * update GDPR consent with final copy
+  * enhancement stylus in gdpr consent
+  * Release 2.0.14
+  * Merge pull request #23 from auth0/disabled_required_checkbox
+  * Disable required chackbox if the country isn't gdpr
+  * Release 2.0.13
+  * Disabling checked property
+  * Release 2.0.12
+  * Replaced webtask url
+  * Release 2.0.11
+  * Remove Consent title
+  * Release 2.0.10
+  * Release 2.0.9
+  * Merge pull request #22 from auth0/gdpr
+  * Added consent gdpr
+  * Release 2.0.8
+  * Merge pull request #21 from auth0/remove_schedule
+  * Removed schedule assistant
+  * Release 2.0.7
+  * Add tech/non-tech buttons
+  * Release 2.0.6
+  * Add chilipiper support
+
 2.0.14 / 2018-06-04
 ===================
 
