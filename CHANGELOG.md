@@ -1,4 +1,10 @@
 
+2.0.16 / 2019-02-19
+===================
+
+  * Merge pull request #35 from degrammer/upgrade-bootstrap
+  * upgrade bootstrap to version 3.4.0
+
 2.0.15 / 2018-12-18
 ===================
 
