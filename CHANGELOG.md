@@ -1,4 +1,10 @@
 
+2.0.17 / 2019-04-26
+===================
+
+  * Merge pull request #36 from auth0/ME-526
+  * Remove "My inquiry is technical"
+
 2.0.16 / 2019-02-19
 ===================
 
