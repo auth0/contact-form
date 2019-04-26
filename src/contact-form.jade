@@ -47,9 +47,4 @@
             span No, thank you. I’ll just sign up.
 
 
-
-        input#contact-form-modal__is-technical(type="hidden", name="isTechnical", value="false")
         button.btn.btn-success.btn-lg.animated.contact-form-modal__submit#contact-form-modal__submit(type="submit", disabled)= dictionary.send
-        if dictionary.technicalInquiry
-          span.contact-form-modal__button-separator= dictionary.or
-          button.btn.btn-default.btn-lg.animated.contact-form-modal__submit#contact-form-modal__technical(type="button", disabled)= dictionary.technicalInquiry

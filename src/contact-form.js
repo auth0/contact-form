@@ -36,9 +36,7 @@ export default class ContactForm {
       company: 'Company',
       role: 'Role',
       message: 'Message',
-      send: 'Send to Sales',
-      or: 'OR',
-      technicalInquiry: 'My inquiry is technical'
+      send: 'Send to Sales'
     }
   }
 
@@ -50,7 +48,6 @@ export default class ContactForm {
     this.modalIsOpen = false;
     this.isGDPR = false;
     this.consent = true;
-
     this.eventEmitter = new EventEmitter();
     this.eventEmitter.subscribe('readyToUpdate', this.updateUI);
 
@@ -63,7 +60,6 @@ export default class ContactForm {
     const {
       elements,
       submitButton,
-      submitButtonTechnical,
       consentGdpr,
       formRoot
     } = this.getElements();
@@ -73,7 +69,6 @@ export default class ContactForm {
         domElement.attr('disabled', false);
       });
       submitButton.attr('disabled', false);
-      submitButtonTechnical.attr('disabled', false);
       if (isGDPR) {
         consentGdpr.show();
         const modalFooter = formRoot.find('.modal-footer');
@@ -182,9 +177,7 @@ export default class ContactForm {
         $('#contact-form-modal__company'),
         $('#contact-form-modal__message')
       ],
-      isTechnical: $('#contact-form-modal__is-technical'),
       submitButton: $('#contact-form-modal__submit'),
-      submitButtonTechnical: $('#contact-form-modal__technical'),
       consentGdpr: $('#contact-form-modal__consent-gdpr'),
       consentGdprAccepted: $('#contact-form-modal__consent-gdpr-yes'),
       consentGdprRejected: $('#contact-form-modal__consent-gdpr-no')
@@ -207,17 +200,9 @@ export default class ContactForm {
   setEventHandlers(onFormSuccess, onFormFail) {
     const {
       elements,
-      formRoot,
-      isTechnical,
-      submitButtonTechnical,
       consentGdprAccepted,
       consentGdprRejected
     } = this.getElements();
-
-    submitButtonTechnical.on('click', () => {
-      isTechnical.val('true');
-      formRoot.submit();
-    });
 
     consentGdprAccepted.click(() => { this.consent = true; });
 
@@ -364,13 +349,12 @@ export default class ContactForm {
    * Change state of submit button
    */
   setSubmitButtonState(state) {
-    const { submitButton, submitButtonTechnical, isTechnical } = this.getElements();
+    const { submitButton } = this.getElements();
     const { dictionary } = this.options;
-    const technical = (isTechnical.val() === 'true');
-    const button = technical ? submitButtonTechnical : submitButton;
-    const otherButton = technical ? submitButton : submitButtonTechnical;
-    const buttonText = technical ? dictionary.technicalInquiry : dictionary.send;
-    const buttonClass = technical ? 'btn-default' : 'btn-success';
+    const button = submitButton;
+    const otherButton = submitButton;
+    const buttonText = dictionary.send;
+    const buttonClass = 'btn-success';
 
     switch (state) {
       case 'success':
@@ -400,7 +384,6 @@ export default class ContactForm {
 
       default:
         otherButton.attr('disabled', null);
-        isTechnical.val('false');
         button
           .removeClass('success btn-danger btn-loading tada shake')
           .attr('disabled', null)
@@ -437,7 +420,7 @@ export default class ContactForm {
    * Get form and metrics data
    */
   getData() {
-    const { elements, isTechnical } = this.getElements();
+    const { elements } = this.getElements();
     const { scheduling } = this.options;
 
     const data = { scheduling };
@@ -454,7 +437,6 @@ export default class ContactForm {
       metricsData[key] = data[key] = element.val();
     });
 
-    data.technical = (isTechnical.val() === 'true');
     data.subject = this.options.source || `New contact from: ${window.location.pathname}`;
     data.source = this.options.source;
     data.referrer = window.location.pathname;
