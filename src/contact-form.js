@@ -385,7 +385,7 @@ export default class ContactForm {
       default:
         otherButton.attr('disabled', null);
         button
-          .removeClass('success btn-danger btn-loading tada shake')
+          .removeClass('btn-success btn-danger btn-loading tada shake')
           .attr('disabled', null)
           .addClass(buttonClass)
           .html(buttonText);
