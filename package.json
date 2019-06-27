@@ -5,8 +5,8 @@
   "main": "build/contact-form.js",
   "scripts": {
     "build": "npm run build:normal && npm run build:cdn",
-    "build:normal": "NODE_ENV=production webpack --config tools/webpack.module.config.js",
-    "build:cdn": "NODE_ENV=production CDN=true webpack --config tools/webpack.module.config.js",
+    "build:normal": "cross-env NODE_ENV=production webpack --config tools/webpack.module.config.js",
+    "build:cdn": "cross-env NODE_ENV=production CDN=true webpack --config tools/webpack.module.config.js",
     "start": "gulp start:dev",
     "playground": "gulp start:webpack-dev-server",
     "prepublish": "npm run build",
@@ -50,6 +50,7 @@
     "babel-preset-stage-0": "^6.5.0",
     "babel-register": "^6.9.0",
     "browser-sync": "^2.13.0",
+    "cross-env": "^5.2.0",
     "css-loader": "^0.23.1",
     "empty-module": "0.0.2",
     "eslint": "^3.5.0",
